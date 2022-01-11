@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class jdbcUtility {
+public class JdbcUtility {
 
     private static final String jdbcURL = "jdbc:mysql://localhost:3306/database?useSSL=false";
     private static final String jdbcUserName = "root";

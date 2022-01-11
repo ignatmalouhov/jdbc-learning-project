@@ -7,9 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static utility.jdbcUtility.connect;
+import static utility.JdbcUtility.connect;
 
 public class JDBCPersonDAO implements PersonDAO {
+
+    public JDBCPersonDAO(String table) {
+        this.table = table;
+    }
+
+    private String table;
 
     private int nextIndex(String table) throws SQLException {
         String sqlQuery = "SELECT MAX(ID) FROM " + table;
@@ -27,7 +33,7 @@ public class JDBCPersonDAO implements PersonDAO {
         return ++lastIndex;
     }
 
-    public Optional<Person> find(String table, String firstName, String lastName) throws SQLException {
+    public Optional<Person> find(String firstName, String lastName) throws SQLException {
         String sqlQuery = "SELECT * FROM " + table + " WHERE FIRST_NAME=?";
 
         Person person = null;
@@ -50,7 +56,7 @@ public class JDBCPersonDAO implements PersonDAO {
         return person == null ? Optional.empty() : Optional.of(person);
     }
 
-    public void insert(String table, Person person) throws SQLException {
+    public void insert(Person person) throws SQLException {
         String sqlQuery = "INSERT INTO " + table + " (ID, FIRST_NAME, LAST_NAME) VALUES (?, ?, ?)";
 
         Connection connection = connect();
@@ -64,7 +70,7 @@ public class JDBCPersonDAO implements PersonDAO {
         connection.close();
     }
 
-    public void update(String table, int id, Person person) throws SQLException {
+    public void update(int id, Person person) throws SQLException {
         String sqlQuery = "UPDATE " + table + " SET FIRST_NAME=?, LAST_NAME=? WHERE ID=" + id;
 
         Connection connection = connect();
@@ -77,7 +83,7 @@ public class JDBCPersonDAO implements PersonDAO {
         connection.close();
     }
 
-    public void delete(String table, int id) throws SQLException {
+    public void delete(int id) throws SQLException {
         String sqlQuery = "DELETE FROM " + table + " WHERE ID=" + id;
 
         Connection connection = connect();
@@ -89,7 +95,7 @@ public class JDBCPersonDAO implements PersonDAO {
     }
 
 
-    public List<Person> selectAll(String table) throws SQLException {
+    public List<Person> selectAll() throws SQLException {
         String sqlQuery = "SELECT * FROM " + table;
         List<Person> persons = new ArrayList<>();
 

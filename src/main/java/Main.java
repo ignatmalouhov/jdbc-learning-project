@@ -1,6 +1,5 @@
-import dao.JDBCPersonDAO;
-import dao.PersonDAO;
 import model.Person;
+import service.PersonService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,38 +10,36 @@ public class Main {
 
     public static void main(String[] args) {
 
-        PersonDAO personDAO = new JDBCPersonDAO();
-        String table = "person";
+        PersonService personService = new PersonService();
         Person person = new Person("John", "Snow");
 
         try {
-            personDAO.insert(table, person);
+            personService.insertPerson(person);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
         try {
-            personDAO.update(table, 1, person);
+            personService.updatePerson(1, person);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
         try {
-            personDAO.delete(table, 2);
+            personService.deletePerson(20);
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
-
         try {
-            Optional<Person> result = personDAO.find(table, "Test", "Test");
+            Optional<Person> result = personService.findPerson("Test", "Test");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
         List<Person> persons = new ArrayList<>();
         try {
-            persons = personDAO.selectAll(table);
+            persons = personService.selectAllPersons();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

@@ -8,14 +8,15 @@ import java.util.Optional;
 
 public interface PersonDAO {
 
-    Optional<Person> find(String table, String firstName, String lastName) throws SQLException;
+    Optional<Person> find(String firstName, String lastName) throws SQLException;
 
-    void insert(String table, Person person) throws SQLException;
+    void insert(Person person) throws SQLException;
 
-    void update(String table, int id, Person person) throws SQLException;
+    void update(int id, Person person) throws SQLException;
 
-    void delete(String table, int id) throws SQLException;
+    void delete(
+            int id) throws SQLException;
 
-    List<Person> selectAll(String table) throws SQLException;
+    List<Person> selectAll() throws SQLException;
 
 }
